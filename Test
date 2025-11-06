@@ -1,0 +1,32 @@
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+import static java.lang.Thread.sleep;
+
+import org.junit.jupiter.api.Test;
+
+class FormFillingSelenideTest {
+
+    @Test
+    void fillForm(){
+        open("file:///C:/Users/SERGEI/OneDrive/Desktop/Форма%20анкета.html"); // Открыть страницу с формой
+
+        $(byId("name")).setValue("Иван Иванов");
+        $(byId("age")).setValue("25");
+        $(byId("email")).setValue("ivan@example.com");
+        $(byId("hobby")).setValue("Программирование, чтение книг");
+        $(byId("books")).setValue("Война и мир, Преступление и наказание");
+
+        $(byXpath("//select[@id='pet']/option[@value='yes']")).click();
+
+        $(byId("name")).shouldHave(text("Иван Иванов"));
+        $(byId("age")).shouldHave(text("25"));
+        $(byId("email")).shouldHave(text("ivan@example.com"));
+        $(byId("hobby")).shouldHave(text("Программирование, чтение книг"));
+        $(byId("books")).shouldHave(text("Война и мир, Преступление и наказание"));
+
+    }
+}
