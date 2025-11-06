@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Анкета</title>
+</head>
+<body>
+    <h1>Анкета</h1>
+    <form action="#" method="post">
+        <!-- Личные данные -->
+        <div class="section">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="section">
+            <label for="age">Возраст:</label>
+            <input type="number" id="age" name="age" min="18" max="100" required>
+        </div>
+        <div class="section">
+            <label for="email">Электронная почта:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <!-- Увлечения -->
+        <fieldset>
+            <legend>Увлечения</legend>
+            <div class="section">
+                <label for="hobby">Хобби:</label>
+                <textarea id="hobby" name="hobby"></textarea>
+            </div>
+            <div class="section">
+                <label for="books">Любимые книги:</label>
+                <input type="text" id="books" name="books">
+            </div>
+        </fieldset>
+        
+        <!-- Домашние животные -->
+        <fieldset>
+            <legend>Домашние животные</legend>
+            <div class="section">
+                <label for="pet">Есть ли домашние животные?</label>
+                <select id="pet" name="pet">
+                    <option value="">Выберите...</option>
+                    <option value="yes">Да</option>
+                    <option value="no">Нет</option>
+                </select>
+            </div>
+        </fieldset>
+        
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+</html>
