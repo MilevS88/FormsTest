@@ -1,0 +1,29 @@
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.Test;
+
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.*;
+
+public class testOrderPizzas {
+
+    @Test
+    public void testOrderPizzas() {
+        open("https://slqamsk.github.io/tmp/xPath01.html");
+
+        $x("//input[@id='pizza2']").click();
+        $x("//input[@id='pizza4']").click();
+
+        $x("//input[@id='name']").val("Сергей Милев");
+        $x("//input[@id='email']").val("domovenak@example.com");
+
+        $x("//button[@class='order-btn']").click();
+
+        $x("//ul/li[text()='Пепперони']").shouldHave();
+        $x("//ul/li[text()='Четыре сыра']").shouldHave();
+        $x("//ul/li[text()='Маргарита']").shouldNotHave();
+        $x("//ul/li[text()='Гавайская']").shouldNotHave();
+        $x("//ul/li[text()='Вегетарианская']").shouldNotHave();
+        }
+    }
