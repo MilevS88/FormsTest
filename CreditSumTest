@@ -1,0 +1,71 @@
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.Test;
+
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
+public class CreditSumTest {
+
+    // Расчёт суммы кредита - отрицательное число.
+    @Test
+    void test01NegativeAmount() {
+        Configuration.pageLoadStrategy = "eager";
+        Selenide.open("https://calcus.ru/kalkulyator-ipoteki");
+
+        getWebDriver().manage().window().maximize();
+
+        $x("//a[contains(.,'По сумме кредита')]").click();
+        $x("//*[@name='credit_sum']").setValue("-1000000");
+        $x("//*[@name='period']").setValue("5");
+        $x("//*[@name='percent']").setValue("5");
+
+        $x("//input[@type='submit']")
+                .shouldBe(clickable)
+                .click();
+        $("#credit_sum-error").shouldBe();
+    }
+
+    // Проверка граничных значений
+    @Test
+    void test02BoundaryValues() {
+        Configuration.pageLoadStrategy = "eager";
+        Selenide.open("https://calcus.ru/kalkulyator-ipoteki");
+
+        getWebDriver().manage().window().maximize();
+
+        $x("//a[contains(.,'По сумме кредита')]").click();
+        $x("//*[@name='credit_sum']").setValue("1000000");
+        $x("//*[@name='period']").setValue("51");
+        $x("//*[@name='percent']").setValue("5");
+
+        $x("//input[@type='submit']")
+                .shouldBe(clickable)
+                .click();
+        $("#period-error").shouldHave(text("Максимальное значение 50"));
+
+    }
+
+    @Test
+    void test03BoundaryValues() {
+        Configuration.pageLoadStrategy = "eager";
+        Selenide.open("https://calcus.ru/kalkulyator-ipoteki");
+
+        getWebDriver().manage().window().maximize();
+
+        $x("//a[contains(.,'По сумме кредита')]").click();
+        $x("//*[@name='credit_sum']").shouldBe(empty);
+        $x("//*[@name='period']").shouldBe(empty);
+        $x("//*[@name='percent']").shouldBe(empty);
+
+        $x("//input[@type='submit']")
+                .shouldBe(clickable)
+                .click();
+
+        $("#credit_sum-error").shouldHave(text("Вы пропустили это поле"));
+        $("#period-error").shouldHave(text("Вы пропустили это поле"));
+        $("#percent-error").shouldHave(text("Вы пропустили это поле"));
+
+    }
+}
