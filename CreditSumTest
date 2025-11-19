@@ -47,6 +47,7 @@ public class CreditSumTest {
 
     }
 
+    // Тест с пустыми полями ввода
     @Test
     void test03BoundaryValues() {
         Configuration.pageLoadStrategy = "eager";
